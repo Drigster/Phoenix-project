@@ -418,3 +418,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 6385163147824764220}
   _amountText: {fileID: 4070615959397777206}
+  _selection: {fileID: 5155700853133396980}
+  _isSelected: 0

@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using static UnityEngine.Rendering.DebugUI;
 
 public class UI_InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private Image _selection;
+    [SerializeField] private bool _isSelected = false;
+    public bool IsSelected => _isSelected;
     private InventorySlot _assignedSlot;
     private Transform _parrent;
     private Vector2 _pos;
@@ -96,5 +100,10 @@ public class UI_InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             slot._assignedSlot.SwapItems(_assignedSlot);
             Reload();
         }
+    }
+
+    public void SetSelected(bool selected)
+    {
+        _selection.gameObject.SetActive(selected);
     }
 }

@@ -5,14 +5,11 @@ public class Player : Character
     [SerializeField] private InventorySystem _hotbar;
     [SerializeField] private InventorySystem _inventory;
 
-    private PlayerInput _playerInput;
-
     public InventorySystem Hotbar => _hotbar;
     public InventorySystem Inventory => _inventory;
 
     private void Awake()
     {
-        _playerInput = new PlayerInput();
         if(_hotbar.Size == 0)
         {
             _hotbar = new InventorySystem(6);
