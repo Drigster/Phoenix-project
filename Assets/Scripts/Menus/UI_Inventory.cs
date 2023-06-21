@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class UI_Inventory : MonoBehaviour
+public class UI_Inventory : UI_Menu
 {
-    [SerializeField] private Transform _container;
-    [SerializeField] private InventorySystem _inventorySystem;
+    [SerializeField] protected InventorySystem _inventorySystem;
     [SerializeField] private UI_InventorySlot _inventorySlotPrefab;
 
     private void OnEnable()

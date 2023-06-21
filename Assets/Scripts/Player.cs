@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Player : Character
 {
@@ -21,24 +20,6 @@ public class Player : Character
         if (_inventory.Size == 0)
         {
             _inventory = new InventorySystem(24);
-        }
-    }
-
-    private void OnEnable()
-    {
-        _playerInput.UI.OpenUI.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInput.UI.OpenUI.Disable();
-    }
-
-    private void Update()
-    {
-        if (_playerInput.UI.OpenUI.WasPerformedThisFrame())
-        {
-            //UiController.OnPlayerInventoryOpenRequsted?.Invoke();
         }
     }
 

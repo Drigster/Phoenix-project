@@ -14,21 +14,20 @@ public class Chest : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        //UiController.OnInventoryCloseRequsted += EndInteraction;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _inventorySystem = new InventorySystem(_inventorySize);
     }
 
     public void Interact(Interactor interactor, out bool interactionSuccesful)
     {
-        UI_InventoryController.OnInventoryChangeRequested?.Invoke(_inventorySystem);
+        UI_DynamicInventory.OnInventoryChangeRequested?.Invoke(_inventorySystem);
         _spriteRenderer.sprite = _openSprite;
         interactionSuccesful = true;
     }
 
     public void EndInteraction()
     {
-        UI_InventoryController.OnInventoryCloseRequested?.Invoke(_inventorySystem);
+        UI_DynamicInventory.OnInventoryCloseRequested?.Invoke();
         _spriteRenderer.sprite = _closedSprite;
     }
 
