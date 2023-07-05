@@ -8,8 +8,12 @@ using UnityEngine;
 public class InventorySystem
 {
     [SerializeField] private List<InventorySlot> _slots;
+    [SerializeField] private int _selectedIndex = -1;
+
     public int Size => _slots.Count;
     public List<InventorySlot> Slots => _slots;
+    public InventorySlot SelectedSlot => Slots[_selectedIndex];
+    public int SelectedIndex => _selectedIndex;
 
     public InventorySystem(int size)
     {
@@ -86,5 +90,10 @@ public class InventorySystem
         slots = _slots.Where(i => i.Item != null).Where(i => i.Item.ItemData == null).ToList();
 
         return slots.Count > 0;
+    }
+
+    public void SelectSlot(int index)
+    {
+        _selectedIndex = index;
     }
 }

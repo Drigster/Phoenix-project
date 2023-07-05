@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour, IInteractable
     [SerializeField] private InventorySystem _inventorySystem;
     private SpriteRenderer _spriteRenderer;
 
-    public UnityAction<IInteractable> OnIteractionComplete { get; set; }
+    public IInteractable.InteractableType Type { get => IInteractable.InteractableType.Default; }
 
     private void Awake()
     {

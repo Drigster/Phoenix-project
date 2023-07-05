@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class UI_Hotbar : UI_Inventory
 {
-    [SerializeField] private int _selectedIndex = -1;
     private PlayerInput _playerInput;
 
     private void Awake()
@@ -35,7 +34,7 @@ public class UI_Hotbar : UI_Inventory
                     if (i == keyNumber - 1)
                     {
                         slotElements[i].SetSelected(true);
-                        _selectedIndex = i;
+                        _inventorySystem.SelectSlot(i);
                         wasSelected = true;
                     }
                     else
@@ -45,7 +44,7 @@ public class UI_Hotbar : UI_Inventory
                 }
                 if(!wasSelected)
                 {
-                    _selectedIndex = -1;
+                    _inventorySystem.SelectSlot(-1);
                 }
             }
         }
@@ -53,29 +52,29 @@ public class UI_Hotbar : UI_Inventory
         {
             if(_playerInput.UI.HotbarScroll.ReadValue<float>() > 0)
             {
-                if(_selectedIndex == slotElements.Count - 1)
+                if(_inventorySystem.SelectedIndex == slotElements.Count - 1)
                 {
-                    _selectedIndex = 0;
+                    _inventorySystem.SelectSlot(0);
                 }
                 else
                 {
-                    _selectedIndex++;
+                    _inventorySystem.SelectSlot(_inventorySystem.SelectedIndex + 1);
                 }
             }
             else
             {
-                if (_selectedIndex == 0)
+                if (_inventorySystem.SelectedIndex == 0)
                 {
-                    _selectedIndex = slotElements.Count - 1;
+                    _inventorySystem.SelectSlot(slotElements.Count - 1);
                 }
                 else
                 {
-                    _selectedIndex--;
+                    _inventorySystem.SelectSlot(_inventorySystem.SelectedIndex - 1);
                 }
             }
             for (int i = 0; i < slotElements.Count; i++)
             {
-                if (i == _selectedIndex)
+                if (i == _inventorySystem.SelectedIndex)
                 {
                     slotElements[i].SetSelected(true);
                 }

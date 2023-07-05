@@ -11,6 +11,7 @@ public class Interactor : MonoBehaviour
     private List<IInteractable> _interactablesInRadius;
     private GameObject _closestInteractable;
     private IInteractable _currentInteractable;
+    private Player _player;
 
     [SerializeField] private Material _outlineMaterial;
     private Material _originalMaterial;
@@ -18,9 +19,11 @@ public class Interactor : MonoBehaviour
     private PlayerInput _playerInput;
 
     public bool IsInteracting { get; private set; }
+    public Player Player => _player;
 
     private void Awake()
     {
+        _player = GetComponentInParent<Player>();
         _playerInput = new PlayerInput();
         _interactablesInRadius = new List<IInteractable>();
     }
@@ -37,7 +40,7 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_interactionPoint.position, _interactionRadius, _interactionLayer);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_interactionPoint.position, _interactionRadius);
 
         _interactablesInRadius.Clear();
         GameObject oldClosestInteractable = _closestInteractable;
@@ -70,7 +73,10 @@ public class Interactor : MonoBehaviour
                 {
                     EndInteraction(_currentInteractable);
                 }
-                StartInteraction(_closestInteractable.GetComponent<IInteractable>());
+                if (_closestInteractable != null)
+                {
+                    StartInteraction(_closestInteractable.GetComponent<IInteractable>());
+                }
             }
         }
         if (_closestInteractable != null)
@@ -79,11 +85,27 @@ public class Interactor : MonoBehaviour
             {
                 oldClosestInteractable.GetComponent<SpriteRenderer>().material = _originalMaterial;
                 _originalMaterial = _closestInteractable.GetComponent<SpriteRenderer>().material;
+                if(_closestInteractable.GetComponent<IInteractable>().Type == IInteractable.InteractableType.Resource)
+                {
+                    _outlineMaterial.SetColor("_OutlineColor", Color.cyan);
+                }
+                else
+                {
+                    _outlineMaterial.SetColor("_OutlineColor", Color.green);
+                }
                 _closestInteractable.GetComponent<SpriteRenderer>().material = _outlineMaterial;
             }
             else
             {
                 _originalMaterial = _closestInteractable.GetComponent<SpriteRenderer>().material;
+                if (_closestInteractable.GetComponent<IInteractable>().Type == IInteractable.InteractableType.Resource)
+                {
+                    _outlineMaterial.SetColor("_OutlineColor", Color.cyan);
+                }
+                else
+                {
+                    _outlineMaterial.SetColor("_OutlineColor", Color.green);
+                }
                 _closestInteractable.GetComponent<SpriteRenderer>().material = _outlineMaterial;
             }
         }
